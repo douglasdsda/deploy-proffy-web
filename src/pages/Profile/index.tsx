@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FormEvent, useState, useEffect } from "react";
 import Input from "../../components/Input";
 import PageHeader from "../../components/PageHeader";
@@ -50,6 +51,7 @@ function Profile() {
 
       
       setBio(user?.bio || "");
+      
       SetSobrenome(user.sobrenome);
       setName(user.name);
       setEmail(user.email);

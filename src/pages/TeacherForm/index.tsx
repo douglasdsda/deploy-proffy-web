@@ -6,19 +6,19 @@ import warningIcon from "../../assets/images/icons/warning.svg";
 import "./styles.css";
 import Textarea from "../../components/Textarea";
 import Select from "../../components/Select";
-import api from "../../services/api";
-import { useHistory } from "react-router-dom";
+// import api from "../../services/api";
+// import { useHistory } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
 
 function TeacherForm() {
-  const history = useHistory();
+  // const history = useHistory();
 
   const { user } = useAuth();
 
-  const [name, setName] = useState("");
-  const [sobrenome, setSobrenome] = useState("");
-  const [email, setEmail] = useState("");
-  const [avatar, setAvatar] = useState("");
+  // const [name, setName] = useState("");
+  // const [sobrenome, setSobrenome] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [avatar, setAvatar] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [bio, setBio] = useState("");
 
@@ -54,32 +54,32 @@ function TeacherForm() {
     setScheduleItems(updateSheduleItems);
   }
   function handleCreateClass(e: FormEvent) {
-    e.preventDefault();
+    // e.preventDefault();
 
-    console.log({
-      name,
-      avatar,
-      whatsapp,
-      bio,
-      subject,
-      cost,
-      scheduleItems,
-    });
+    // console.log({
+    //   name,
+    //   avatar,
+    //   whatsapp,
+    //   bio,
+    //   subject,
+    //   cost,
+    //   scheduleItems,
+    // });
 
-    api
-      .post("classes", {
-        name,
-        avatar,
-        whatsapp,
-        bio,
-        subject,
-        cost: Number(cost),
-        schedule: scheduleItems,
-      })
-      .then(() => {
-        alert("Cadastrado com Sucesso.");
-        history.push("/Landing");
-      });
+    // api
+    //   .post("classes", {
+    //     name,
+    //     avatar,
+    //     whatsapp,
+    //     bio,
+    //     subject,
+    //     cost: Number(cost),
+    //     schedule: scheduleItems,
+    //   })
+    //   .then(() => {
+    //     alert("Cadastrado com Sucesso.");
+    //     history.push("/Landing");
+    //   });
   }
 
   return (
