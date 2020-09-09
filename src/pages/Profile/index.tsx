@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
 import { removePhoneMask } from "../../utils/Helper";
 import convertHourToMinutes from "../../utils/convertHourToMinutes";
+import userImgNotfound from "../../assets/images-v2/user.png";
 
 interface SheduleDTO {
   id?: number;
@@ -135,7 +136,7 @@ function Profile() {
   return (
     <div id="page-profile-form" className="container">
       <PageHeader
-        avatar={user.avatar}
+        avatar={user.avatar ? user.avatar : userImgNotfound}
         title={user.name}
         path="Meu perfil"
         description={user.bio ? user.bio : "sem biografia"}
