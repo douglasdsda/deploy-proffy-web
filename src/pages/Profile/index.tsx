@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FormEvent, useState, useEffect } from "react";
 import Input from "../../components/Input";
 import PageHeader from "../../components/PageHeader";
@@ -11,16 +10,16 @@ import api from "../../services/api";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
 import { removePhoneMask } from "../../utils/Helper";
+import convertHourToMinutes from "../../utils/convertHourToMinutes";
 
-interface Shedule {
+interface SheduleDTO {
   id?: number;
-  subject: string;
-  cost: number;
+  to: string;
+  from: string;
+  week_day: number;
   created_at?: Date;
-  user_id?: string;
+  class_id?: string;
 }
-
-
 
 function Profile() {
   const history = useHistory();
@@ -42,27 +41,30 @@ function Profile() {
 
   useEffect(() => {
     const load = async () => {
- 
-      const response = await api.get('users');
-      
- 
+      const response = await api.get("classes");
+      console.log("responde: ", response);
+      const { classes, shedule } = await response.data;
 
-      const {classes , shedule } = await response.data; 
-
-      
       setBio(user?.bio || "");
-      
+
       SetSobrenome(user.sobrenome);
       setName(user.name);
       setEmail(user.email);
       setWhatsapp(user?.whatsapp || "");
-      setCost(classes?.cost || "" )
+      setCost(classes?.cost || "");
       setSubject(classes?.subject || "");
 
+      if (shedule) {
+        const formattedShedule = shedule.map((item: SheduleDTO) => {
+          return {
+            ...item,
+            to: convertHourToMinutes(item.to),
+            from: convertHourToMinutes(item.from),
+          };
+        });
 
-     console.log(response.data);
-      
-      setScheduleItems(shedule);
+        if (formattedShedule) setScheduleItems(formattedShedule);
+      }
     };
 
     load();
@@ -107,10 +109,8 @@ function Profile() {
       scheduleItems,
     });
 
-    
-
     api
-      .put("users", {
+      .post("classes", {
         name,
         email,
         sobrenome,
@@ -131,7 +131,6 @@ function Profile() {
           whatsapp: removePhoneMask({ value: whatsapp }),
           bio,
           id: user.id,
-           
         });
         history.push("/Landing");
       });

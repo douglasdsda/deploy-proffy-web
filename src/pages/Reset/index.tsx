@@ -1,8 +1,7 @@
 import React, { FormEvent, useCallback, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useRouteMatch, useLocation, useHistory } from "react-router-dom";
 
 import background from "../../assets/images-v2/Proffy.png";
-import voltar from "../../assets/images-v2/Voltar.png";
 
 import InputUser from "../../components/InputUser";
 
@@ -11,14 +10,11 @@ import { FormFields } from "../../utils/FormField";
 import api from "../../services/api";
 import { useToast } from "../../hooks/toast";
 
-const inputsFields = {
-  email: {
-    value: "",
-    validation: /^[a-z-_\d.]{3,}@[a-z]{3,}(\.com|\.br|\.com\.br)$/i,
-    valid: false,
+interface PropsToken {
+  token: string;
+}
 
-    touched: false,
-  },
+const inputsFields = {
   password: {
     value: "",
     validation: /^(?=.*\d).{6,30}$/,
@@ -27,40 +23,48 @@ const inputsFields = {
   },
 };
 
-const Forgot: React.FC = () => {
+const Reset: React.FC = () => {
   const [fields, setFields] = useState<FormFields>(inputsFields as FormFields);
   const [formValid, setFormValid] = useState(false);
-
   const { addToast } = useToast();
+  const { search } = useLocation();
+  const history = useHistory();
 
-  const handleSignin = useCallback(
+  const handleSubmit = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
 
-      api
-        .post("forgot", {
-          email: fields.email.value,
-        })
-        .then((response) => {
-          console.log("response: ", response);
+      const [_, token] = search.split("=");
 
-          addToast({
-            type: "success",
-            title: "Reset realizado com sucesso.",
-            description: "Verifique seu e-mail!",
+      if (token) {
+        api
+          .post(`reset/${token}`, {
+            password: fields.password.value,
+          })
+          .then((response) => {
+            console.log("response: ", response);
+            addToast({
+              type: "success",
+              title: "Resetado com sucesso.",
+              description: "Redirecionando para pagina Inicial!",
+            });
+
+            history.push("/");
+          })
+          .catch((err) => {
+            addToast({
+              type: "error",
+              title: "Erro ao tentar mudar o password.",
+            });
           });
-          setFields(inputsFields)
-        })
-        .catch((err) => {
-          console.log("err:", err);
-          addToast({
-            type: "error",
-            title: "Ocorreu algum erro ao tentar.",
-            description: "Problema com e-mail",
-          });
+      } else {
+        addToast({
+          type: "error",
+          title: "Token não existe.",
         });
+      }
     },
-    [addToast, fields.email.value]
+    [addToast, fields.password.value, history, search]
   );
 
   function onInputValueChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -103,33 +107,32 @@ const Forgot: React.FC = () => {
   }
 
   return (
-    <div id="page-forgot">
-      <div className="container" id="page-forgot-content">
+    <div id="page-reset">
+      <div className="container" id="page-reset-content">
         <div className="form-content">
-          <Link to="/">
-            <img className="back" src={voltar} alt="voltar" />
-          </Link>
-
-          <form onSubmit={handleSignin}>
-            <h1>Eita esqueceu sua senha?</h1>
-            <h2>não esquenta vamos dar um jeito nisso.</h2>
+          <form onSubmit={handleSubmit}>
+            <h1>Reset</h1>
+            <h2>Reset seu password.</h2>
             <InputUser
-              classStyles={setInputClasses("email")}
-              value={fields.email.value}
+              classStyles={setInputClasses("password")}
+              value={fields.password.value}
               onChange={onInputValueChange}
               maxLength={80}
-              name="email"
-              placeholder="E-mail"
-              label="E-mail"
+              name="password"
+              typePassword
+              placeholder="Password"
+              label="Password"
             />
-
-            <button disabled={!fields.email.valid} name="submit" type="submit">
-              Enviar
+            <button
+              disabled={!fields.password.valid}
+              name="submit"
+              type="submit"
+            >
+              Resetar
             </button>
           </form>
         </div>
-
-        <div className="background-container-forgot">
+        <div className="background-container-reset">
           <img src={background} alt="logo" />
         </div>
       </div>
@@ -137,4 +140,4 @@ const Forgot: React.FC = () => {
   );
 };
 
-export default Forgot;
+export default Reset;

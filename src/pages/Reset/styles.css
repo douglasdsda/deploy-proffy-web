@@ -1,0 +1,124 @@
+#page-reset {
+  color: var(--color-text-complement);
+  background-color: var(--color-background);
+  transition: background-color 0.2s;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+#page-reset-content {
+  display: flex;
+
+  flex-direction: column-reverse;
+}
+
+#page-reset .background-container-reset {
+  max-height: 15rem;
+  width: 100%;
+}
+#page-reset .background-container-reset img {
+  height: 15rem;
+  width: 100vw;
+
+  object-fit: cover !important;
+}
+ 
+#page-reset .form-content form {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 0 5rem;
+}
+
+#page-reset h1 {
+  margin-top: 0.5rem;
+  font-size: 45px;
+}
+
+#page-reset h2 {
+  margin-top: 0.5rem;
+  font-size: 15px;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+#page-reset h1 + .input-user {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+#page-reset .input-user + div {
+  margin-bottom: 3rem;
+}
+
+#page-reset .form-content h1 {
+  color: var(--color-title-sin);
+}
+
+#page-reset .form-content button {
+ 
+  display: block;
+  margin-top: 1rem;
+  background-color: var(--color-title-sin-button);
+  color: var(--color-text-complement);
+  border: 0;
+  border-radius: 7px;
+  text-align: center;
+  padding: 2rem;
+
+  outline: none;
+  margin-bottom: 3rem;
+}
+
+#page-reset .form-content button:enabled:hover {
+  color: var(--color-title-in-primary);
+  background-color: var(--color-secundary-dark);
+  cursor: pointer;
+}
+
+#page-reset .form-content button:enabled {
+  background-color: var(--color-secundary);
+  color: var(--color-button-text);
+  cursor: pointer;
+  cursor: pointer;
+}
+
+@media (min-width: 900px) {
+  #page-reset-content {
+ 
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+  }
+ 
+  #page-reset .form-content {
+    margin-top: 0rem;
+    display: flex;
+    width: 650px;
+    max-height: 100vh;
+    margin: auto 0;
+ 
+  }
+
+ 
+  #page-reset .form-content form {
+    display: flex;
+    width: 650px;
+    flex-direction: column;
+    padding: 0 8rem;
+  }
+  #page-reset .background-container-reset {
+    max-height: 100vh;
+    display: block;
+    height: 100vh;
+ 
+  }
+  #page-reset .background-container-reset img {
+    width: calc(100vw - 650px) !important;
+    object-fit: fill !important;
+    height: 100% !important;
+  }
+  
+}

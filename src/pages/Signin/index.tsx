@@ -15,8 +15,7 @@ import { useAuth } from "../../hooks/auth";
 const inputsFields = {
   email: {
     value: "",
-    // validation: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    validation: /^.{3,80}$/,
+    validation: /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/,
     valid: false,
     touched: false,
   },
@@ -68,14 +67,7 @@ const Signin: React.FC = () => {
       try {
         const email = fields.email.value;
         const password = fields.password.value;
-        console.log(
-          "fields: ",
-          fields,
-          "email: ",
-          email,
-          "password: ",
-          password
-        );
+       
         await signIn({
           email,
           password,
