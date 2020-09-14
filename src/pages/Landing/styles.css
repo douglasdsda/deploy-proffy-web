@@ -193,7 +193,7 @@
   }
 
   .footer-class {
-    border: 1px solid black;
+
     grid-area: footer;
     display: flex;
     flex-direction: row-reverse;
