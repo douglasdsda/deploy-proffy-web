@@ -5,15 +5,14 @@ import Select from "../../components/Select";
 import TeacherItem, { Teacher } from "../../components/TeacherItem";
 import api from "../../services/api";
 
-
 import "./styles.css";
 
 function TeacherList() {
   const [teachers, setTeachers] = useState([]);
-  const [subject, setSubject] = useState("Matemática");
+  const [subject, setSubject] = useState('');
 
-  const [week_day, setWeekDay] = useState("5");
-  const [time, setTime] = useState("14:00");
+  const [week_day, setWeekDay] = useState('');
+  const [time, setTime] = useState('');
 
   async function searchTeacher(e: FormEvent) {
     e.preventDefault();
@@ -26,14 +25,12 @@ function TeacherList() {
       },
     });
 
-    console.log('shedules: ',response.data )
- 
-     setTeachers(response.data);
+    setTeachers(response.data);
   }
 
   return (
     <div id="page-teacher-list" className="container">
-      <PageHeader   path="Estudar" title="Que incrivel que voce quer dar aulas.">
+      <PageHeader path="Estudar" title="Que incrivel que voce quer dar aulas.">
         <form onSubmit={searchTeacher} id="search-teachers">
           <Select
             name="subject"
